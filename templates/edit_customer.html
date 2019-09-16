@@ -1,0 +1,39 @@
+{% extends 'base.html'%}
+
+
+{% block content %}
+    <div class="content-wrapper">
+          <!-- Content Header (Page header) -->
+          <section class="content-header">
+              <h1>编辑客户
+                  <small>Optional description</small>
+              </h1>
+              <ol class="breadcrumb">
+                  <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
+                  <li class="active">Here</li>
+              </ol>
+          </section>
+
+          <!-- Main content -->
+          <section class="content">
+
+            <div class="row">
+                  <div class="col-md-8 col-md-offset-2">
+                      <form action="" method="post" novalidate>
+                        {% csrf_token %}
+                        {% for field in form %}
+                         <div class="form-group">
+                             <label for="">{{ field.label }}</label>
+                            {{ field }}
+                            <span class="error">{{ field.errors.0 }}</span>
+                         </div>
+                         {% endfor %}
+                        <button class="btn btn-default">提交</button>
+                     </form>
+                  </div>
+            </div>
+
+          </section>
+          <!-- /.content -->
+      </div>
+{% endblock %}

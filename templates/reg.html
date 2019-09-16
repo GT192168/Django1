@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.css">
+</head>
+<body>
+<h3>注册页面</h3>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <form action="" method="post">
+                {% csrf_token %}
+
+                {% for field in form %}
+                       <div class="form-group">
+                            <label for="">{{ field.label }}</label>
+                            {{ field }}
+                            <span class="error pull-right"></span>
+                        </div>
+                {% endfor %}
+
+
+
+                <input type="button" class="btn btn-primary reg_btn" value="注册">
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<script src="/static/js/jquery.js"></script>
+<script>
+
+    $(".reg_btn").click(function () {
+
+
+        $.ajax({
+            url:"",
+            type:"post",
+            data:{
+                user:$("#id_user").val(),
+                pwd:$("#id_pwd").val(),
+                gender:$("#id_gender").val(),
+                r_pwd:$("#id_r_pwd").val(),
+                email:$("#id_email").val(),
+                csrfmiddlewaretoken:$("[name='csrfmiddlewaretoken']").val()
+
+            },
+            success:function (res) {
+                console.log(res);
+
+                if (res.user){
+                    // 注册成功
+                    location.href="/login/"
+                }
+                else{
+
+                 // 清除错误
+                $(".error").html("");
+                $(".form-group").removeClass("has-error");
+
+                //  展示新的错误
+                $.each(res.err_msg,function (i,j) {
+                    console.log(i,j);
+
+                    $("#id_"+i).next().html(j[0]).css("color","red").parent().addClass("has-error")
+
+
+
+                })
+
+
+                }
+
+
+
+            }
+        })
+
+
+
+    })
+
+
+</script>
+</body>
+</html>
